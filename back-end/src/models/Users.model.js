@@ -31,7 +31,7 @@ const userModel = (sequelize, DataTypes) => {
             allowNull: true,
         },
         Status: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('Active', 'Inactive', 'Deleted', 'Expired'),
             allowNull: true,
         },
         role: {
@@ -43,7 +43,7 @@ const userModel = (sequelize, DataTypes) => {
         token: {
             type: DataTypes.VIRTUAL,
             get() {
-                return jwt.sign({ userId: this.id, role: this.role }, process.env.SECRET);
+                return jwt.sign({ userID: this.id, role: this.role }, process.env.SECRET);
             },
         },
         Date_Of_Birth: {

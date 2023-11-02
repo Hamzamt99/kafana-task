@@ -20,7 +20,7 @@ const dealsModel = (sequelize, DataTypes) => {
             allowNull: true,
         },
         Status: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('Active', 'Inactive', 'Deleted', 'Expired'),
             allowNull: true,
         },
     });

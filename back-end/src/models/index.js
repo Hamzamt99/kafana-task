@@ -30,6 +30,14 @@ let usersModel = users(sequelize, DataTypes)
 let dealsModel = deals(sequelize, DataTypes)
 let claimedModel = claimedDeals(sequelize, DataTypes)
 
+// tables relations one to many (user one to many with claimed deals table)
+usersModel.hasMany(claimedModel, { foreignKey: "User_ID", sourceKey: "id" });
+claimedModel.belongsTo(usersModel, { foreignKey: "User_ID", targetKey: "id" });
+
+// tables relations one to many (deals one to many with claimedModel deals table)
+dealsModel.hasMany(claimedModel, { foreignKey: "Deal_ID", sourceKey: "id" });
+claimedModel.belongsTo(dealsModel, { foreignKey: "Deal_ID", targetKey: "id" });
+
 // create new instance from collection class 
 let user = new Collection(usersModel)
 let deal = new Collection(dealsModel)
