@@ -2,10 +2,6 @@
 
 const claimedModel = (sequelize, DataTypes) => {
     const claimedDeals = sequelize.define('claimed', {
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         User_ID: {
             type: DataTypes.INTEGER,
             allowNull: false

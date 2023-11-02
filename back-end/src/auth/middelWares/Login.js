@@ -1,21 +1,26 @@
 'use strict'
+
+//imports
 const base = require('base-64')
 const bcrypt = require('bcrypt')
-const { newSequlize, DataTypes } = require('../../models')
-const userModel = require('../models/user.model')
-
-let user = userModel(newSequlize, DataTypes)
+const { user } = require('../../models')
 
 module.exports = async (req, res, next) => {
+     // check if the headers contain the username and the password
      if (req.headers.authorization) {
+          // split the the headers get the basic and the data in array and remove the basic and keep the data
           const header = req.headers.authorization.split(' ').pop()
+          // decode the data to be readable 
           const decode = base.decode(header)
-          const [username, password] = decode.split(":")
-          const validUser = await user.findOne({ where: { username: username } })
-          console.log(validUser);
+          // split the and decode the data and store them in email and pass variables 
+          const [email, password] = decode.split(":")
+          // check if the email is exists
+          const validUser = await user.find(email)
           if (validUser !== null) {
+               // check if the password is correct
                const validPass = await bcrypt.compare(password, validUser.password)
                if (validPass) {
+                    // send the data in request 
                     req.user = validUser
                     next()
                } else {
@@ -23,7 +28,7 @@ module.exports = async (req, res, next) => {
                }
           }
           else {
-               res.status(401).json('Invalid userName');
+               res.status(401).json('Invalid email');
           }
      }
      else {
