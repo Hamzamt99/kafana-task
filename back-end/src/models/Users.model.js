@@ -57,6 +57,12 @@ const userModel = (sequelize, DataTypes) => {
             validate: { isEmail: true },
             allowNull: false,
         },
+        Hero: {
+            type: DataTypes.STRING,
+        },
+        Profile: {
+            type: DataTypes.STRING,
+        },
     });
 
     User.addHook('beforeCreate', (user) => {

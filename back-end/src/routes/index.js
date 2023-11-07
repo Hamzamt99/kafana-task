@@ -9,6 +9,9 @@ const isAuth = require('../auth/middelWares/BearerToken')
 const { user } = require('../models')
 const changePass = require('../auth/middelWares/changePass')
 const forgetPassword = require('../auth/middelWares/nodeMiler')
+const updateProfile = require('../auth/middelWares/updateProfile')
+const { uploadProfile, profileUpload } = require('../auth/middelWares/multer')
+const userProfile = require('../auth/middelWares/userProfile')
 
 // sign up route or endpoint
 authRoutes.post("/signup", async (req, res) => {
@@ -46,6 +49,8 @@ authRoutes.patch('/user', isAuth, async (req, res) => {
     }
 });
 
+
+
 // login route or endpoint
 authRoutes.post('/login', login, async (req, res) => {
     res.status(200).json(req.user)
@@ -64,5 +69,55 @@ authRoutes.post('/forgetPassword', forgetPassword, (req, res) => {
 // update the password
 authRoutes.post('/resetPassword/:id', changePass, (req, res) => {
     res.status(200).json('password changed successfully')
+})
+
+// update the password
+authRoutes.get('/resetPassword/:id', (req, res) => {
+    res.status(200).json('change password')
+})
+
+authRoutes.get('/profile', isAuth, async (req, res) => {
+    try {
+        let id = req.users.userID
+        if (id) {
+            const userData = await user.read(id)
+            res.status(200).json({
+                name: userData.name,
+                phone: userData.phone,
+                Date_Of_Birth: userData.Date_Of_Birth,
+                email: userData.email,
+                Status: userData.Status,
+                heroImage: userData.Hero,
+                profileImage: userData.Profile
+            })
+        }
+    } catch (e) {
+
+    }
+})
+
+authRoutes.patch('/profile', isAuth, updateProfile, (req, res) => res.status(200).json('profile Updated')
+)
+
+authRoutes.post('/profileImage', isAuth, userProfile, profileUpload.single('image'), uploadProfile, async (req, res) => {
+    try {
+        const data = req.data;
+
+        await data.update({ Profile: req.image });
+        res.status(200).json('image uploaded')
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+authRoutes.post('/heroImage', isAuth, userProfile, profileUpload.single('image'), uploadProfile, async (req, res) => {
+    try {
+        const data = req.data;
+
+        await data.update({ Hero: req.image });
+        res.status(200).json('image uploaded')
+    } catch (err) {
+        res.status(500).json(err);
+    }
 })
 module.exports = authRoutes

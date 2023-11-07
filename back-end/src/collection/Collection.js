@@ -50,7 +50,8 @@ class Collection {
 
     async delete(id) {
         try {
-            const deleted = await this.model.destroy({ where: { id } })
+            console.log(id);
+            const deleted = await this.model.destroy({ where: { Deal_ID: id } })
             return deleted;
         } catch (error) {
             console.log(`error while deleting the record ${this.model}`)
@@ -59,8 +60,8 @@ class Collection {
     }
 
     async getRelation(id, model) {
-        const records = await this.model.findOne({
-            where: { id },
+        const records = await this.model.findAll({
+            where: { User_ID: id },
             include: model,
         });
         return records;

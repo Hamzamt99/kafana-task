@@ -2,27 +2,9 @@
 
 //imports 
 const express = require('express')
-const models = require('../models')
 const dealsRoute = express.Router()
 const isAuth = require('../auth/middelWares/BearerToken')
 const { deal } = require('../models')
-
-
-// add new deal route 
-dealsRoute.post('/deal', async (req, res) => {
-    try {
-        const body = req.body;
-        if (body) {
-            const addDeal = await deal.create(body);
-            res.status(201).json(addDeal);
-        } else {
-            res.status(400).json('Invalid request - missing request body');
-        }
-    } catch (e) {
-        console.error(e);
-        res.status(500).json(e.message);
-    }
-});
 
 // get one deal 
 dealsRoute.get('/deal/:id', async (req, res) => {
@@ -44,7 +26,7 @@ dealsRoute.get('/deal/:id', async (req, res) => {
 });
 
 // get all deals 
-dealsRoute.get('/deals', async (req, res) => {
+dealsRoute.get('/deals', isAuth, async (req, res) => {
     try {
         const findDeal = await deal.read();
         if (findDeal) {
@@ -57,37 +39,5 @@ dealsRoute.get('/deals', async (req, res) => {
     }
 });
 
-// update deal
-dealsRoute.patch('/deal/:id', async (req, res) => {
-    try {
-        const body = req.body;
-        const id = req.params.id
-        if (body) {
-            const addDeal = await deal.update(id, body);
-            res.status(200).json(addDeal);
-        } else {
-            res.status(400).json('Invalid request - missing request body');
-        }
-    } catch (e) {
-        console.error(e);
-        res.status(500).json(e.message);
-    }
-});
-
-// remove deal 
-dealsRoute.delete('/deal/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        if (id) {
-            await deal.delete(id);
-            res.status(204).json('deleted');
-        } else {
-            res.status(400).json('Invalid request');
-        }
-    } catch (e) {
-        console.error(e);
-        res.status(500).json(e.message);
-    }
-});
 
 module.exports = dealsRoute

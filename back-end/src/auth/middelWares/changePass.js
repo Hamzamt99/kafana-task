@@ -7,9 +7,8 @@ module.exports = async (req, res, next) => {
     try {
         const obj = req.body
         const id = req.params.id
-        const decode = await jwt.decode(id)
         if (id) {
-            const users = await user.read(decode.id)
+            const users = await user.read(id)
             if (users) {
                 await users.update({ password: obj.newPassword });
                 console.log('Password updated successfully.');
