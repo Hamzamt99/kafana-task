@@ -79,7 +79,7 @@ adminRoute.delete('/deal/:id', isAuth, isAdmin, async (req, res) => {
     try {
         const id = req.params.id
         if (id) {
-            await deal.delete(id);
+            await deal.deleteDeal(id);
             res.status(204).json('deleted');
         } else {
             res.status(400).json('Invalid request');

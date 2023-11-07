@@ -50,8 +50,17 @@ class Collection {
 
     async delete(id) {
         try {
-            console.log(id);
             const deleted = await this.model.destroy({ where: { Deal_ID: id } })
+            return deleted;
+        } catch (error) {
+            console.log(`error while deleting the record ${this.model}`)
+            return error;
+        }
+    }
+
+    async deleteDeal(id) {
+        try {
+            const deleted = await this.model.destroy({ where: { id: id } })
             return deleted;
         } catch (error) {
             console.log(`error while deleting the record ${this.model}`)

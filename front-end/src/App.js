@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './components/pages/home';
 import Header from './components/Header';
+import AdminHome from './components/pages/admin/Home'
 import cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import { useSelector } from 'react-redux';
@@ -32,9 +33,12 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/Profile" element={<Profile />} /> */}
+            {
+              decode && decode.role === 'admin' &&
+              <Route path="/admin" element={<AdminHome />} />
+            }
             <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </>
       ) : (
