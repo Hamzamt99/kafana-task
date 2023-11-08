@@ -114,7 +114,7 @@ export default function SignUp() {
                                     </FormControl>
                                 </Stack>
                                 <FormControl id="role">
-                                    <FormLabel htmlFor="select">Role</FormLabel>
+                                    <FormLabel htmlFor="select">Role <p>(Just for the task)</p></FormLabel>
                                     <Select >
                                         <option value="user">user</option>
                                         <option value="admin">admin</option>

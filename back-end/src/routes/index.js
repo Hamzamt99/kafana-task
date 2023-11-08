@@ -102,7 +102,6 @@ authRoutes.patch('/profile', isAuth, updateProfile, (req, res) => res.status(200
 authRoutes.post('/profileImage', isAuth, userProfile, profileUpload.single('image'), uploadProfile, async (req, res) => {
     try {
         const data = req.data;
-
         await data.update({ Profile: req.image });
         res.status(200).json('image uploaded')
     } catch (err) {

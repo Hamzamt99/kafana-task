@@ -108,7 +108,6 @@ const LoginForm = () => {
                     localStorage.setItem('Remember_Me', encryptedData);
                 }
                 navigate('/')
-                // window.location.href = '/'
 
             }
         } catch (e) {

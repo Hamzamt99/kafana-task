@@ -22,6 +22,10 @@ const dealsModel = (sequelize, DataTypes) => {
         Status: {
             type: DataTypes.ENUM('Active', 'Inactive', 'Deleted', 'Expired'),
             allowNull: true,
+            defaultValue: 'Inactive'
+        },
+        image: {
+            type: DataTypes.STRING,
         },
     });
 

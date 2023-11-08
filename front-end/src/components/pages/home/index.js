@@ -6,6 +6,7 @@ import { claimDeal, getClaim, getDeals, removeClaim } from '../../../store/reduc
 import Button from 'react-bootstrap/Button';
 import './style.scss'
 import { Col, Row } from 'react-bootstrap';
+import AddDeal from '../addDeal';
 
 function Home() {
     const dispatch = useDispatch()
@@ -27,11 +28,12 @@ function Home() {
 
     return (
         <>
+
             <Row xs={1} md={2} lg={4} className="g-4 grid" >
                 {state.allDeals.map((deal) => (
                     <Col key={deal.id}>
                         <Card className='grid-item'>
-                            <Card.Img variant="top" src={deals} />
+                            <Card.Img variant="top" src={deal.image || deals} />
                             <Card.Body>
                                 <Card.Title> {deal.name}</Card.Title>
                                 <Card.Text>  <span style={{ fontWeight: 'bold' }}>Description: </span> {deal.Description}</Card.Text>
@@ -72,7 +74,9 @@ function Home() {
                     </Col>
                 ))}
             </Row>
-
+            <div className='add-deal'>
+                <AddDeal />
+            </div>
         </>
     );
 }
