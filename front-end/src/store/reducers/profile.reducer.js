@@ -58,8 +58,6 @@ export const profileEdit = (payload) => async dispatch => {
     }
 }
 
-
-
 export const getProfile = () => async dispatch => {
     try {
         const token = cookies.load('user_session');

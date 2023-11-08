@@ -10,6 +10,9 @@ import { useEffect, useState } from 'react';
 import Container from './components/pages/authContainer';
 import NotFound from './components/pages/404';
 import Profile from './components/pages/profileDashboard/Profile';
+import Users from './components/pages/admin/Users';
+import Claimed from './components/pages/admin/Claimed';
+import AddDeal from './components/pages/addDeal';
 
 function App() {
   const [decode, setDecode] = useState(null);
@@ -34,8 +37,13 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             {
-              decode && decode.role === 'admin' &&
-              <Route path="/admin" element={<AdminHome />} />
+              decode && decode.role === 'admin' && (
+                <>
+                  <Route path="/deals" element={<AdminHome />} />
+                  <Route path="/users" element={<Users />} />
+                  <Route path="/claimed" element={<Claimed />} />
+                </>
+              )
             }
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />

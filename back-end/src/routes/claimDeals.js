@@ -63,20 +63,6 @@ claimedRoute.get('/claim', isAuth, async (req, res) => {
     }
 });
 
-// get all deals 
-claimedRoute.get('/allclaimed', async (req, res) => {
-    try {
-        const findDeal = await claimed.getAll(dealsModel);
-        if (findDeal) {
-            res.status(200).json(findDeal);
-        } else {
-            res.status(404).json('Error while finding the deals');
-        }
-    } catch (e) {
-        res.status(500).json(e.message);
-    }
-});
-
 
 // remove claim 
 claimedRoute.delete('/claim/:id', async (req, res) => {

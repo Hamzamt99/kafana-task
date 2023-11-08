@@ -58,7 +58,7 @@ class Collection {
         }
     }
 
-    async deleteDeal(id) {
+    async deleteID(id) {
         try {
             const deleted = await this.model.destroy({ where: { id: id } })
             return deleted;
@@ -76,7 +76,14 @@ class Collection {
         return records;
     }
 
-    async getAll(model) {
+    async getAll(model, model2) {
+        const records = await this.model.findAll({
+            include: [model, model2]
+        });
+        return records;
+    }
+
+    async getUsers(model) {
         const records = await this.model.findAll({
             include: model
         });

@@ -12,4 +12,4 @@ const { db } = require('./src/models')
 
 db.sync().then(() => {
     start(port)
-}).catch(error => console.log(error))
+}).catch(error => console.log(error)) 

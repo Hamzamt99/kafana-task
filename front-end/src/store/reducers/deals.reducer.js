@@ -130,6 +130,29 @@ export const removeDeal = (id) => async dispatch => {
     }
 };
 
+
+export const addDeal = (data) => async dispatch => {
+    try {
+        console.log(data);
+        const token = cookies.load('user_session');
+        const formData = new FormData();
+        formData.append('image', data.image)
+        formData.append('name', data.name)
+        formData.append('Description', data.Description)
+        formData.append('Amount', data.Amount)
+        formData.append('Currency', data.Currency)
+        await axios.post(`${url}/deal`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then(res => {
+                dispatch(deals(res.data))
+            })
+    } catch (e) {
+        console.log(e.message);
+    }
+}
 const deals = (deals) => ({
     type: 'ALL_DEALS',
     payload: deals

@@ -116,7 +116,7 @@ function Profile() {
                         {profileState.profile && (
                             <>
                                 <Image
-                                    src={profileState.profile.heroImage}
+                                    src={profileState.profile.heroImage || 'https://placehold.co/600x400'}
                                     objectFit="cover"
                                     objectPosition='50% 50%'
                                     maxW={['100%', '100%', '100%', '100%', '100%']}
@@ -302,7 +302,7 @@ function Profile() {
                                         {profileState.profile && (
                                             <>
                                                 <Image
-                                                    src={heroImage ? URL.createObjectURL(heroImage) : profileState.profile.heroImage}
+                                                    src={heroImage ? URL.createObjectURL(heroImage) : profileState.profile.heroImage || 'https://placehold.co/600x400'}
                                                     objectFit="cover"
                                                     maxW={['420px', '768px', '992px', '1200px', '1260px']}
                                                     width={['100%', '490px', '620px', '600px', '630px']}

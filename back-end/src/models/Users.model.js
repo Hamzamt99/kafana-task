@@ -33,6 +33,7 @@ const userModel = (sequelize, DataTypes) => {
         Status: {
             type: DataTypes.ENUM('Active', 'Inactive', 'Deleted', 'Expired'),
             allowNull: true,
+            defaultValue: 'Inactive'
         },
         role: {
             type: DataTypes.ENUM("admin", "user"),

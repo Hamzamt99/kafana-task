@@ -3,16 +3,8 @@
     justify-content: center;
 }
 
-.grid-item {
-    // height: 57vh !important;
-    // flex-basis: calc(25% - 10px) !important;
-    // margin: 5px;
-
-    // @media (max-width: 768px) {
-    //     flex-basis: calc(33.33% - 10px) !important;
-    // }
-
-    // @media (max-width: 576px) {
-    //     flex-basis: calc(50% - 10px) !important;
-    // }
+.add-deal {
+    position: fixed;
+    bottom: 20px; 
+    right: 20px;
 }

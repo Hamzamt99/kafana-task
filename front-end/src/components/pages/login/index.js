@@ -107,12 +107,8 @@ const LoginForm = () => {
                     const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
                     localStorage.setItem('Remember_Me', encryptedData);
                 }
-                if (data.data.role === 'user') {
-                    console.log(data.data.role);
-                    navigate('/')
-                } else {
-                    navigate('/admin')
-                }
+                navigate('/')
+
             }
         } catch (e) {
             setError(e.response.data);
