@@ -80,6 +80,8 @@ const LoginForm = () => {
     const [isOpen, setOpen] = useState(false);
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
+    console.log(loading);
     const url = process.env.REACT_APP_URL;
 
     const handleCheckboxChange = () => {
@@ -93,12 +95,12 @@ const LoginForm = () => {
                 email: e.target.email.value,
                 password: e.target.password.value
             }
-            const data = await axios.post(`${url}/login`, null, {
+            const data = await axios.post(`${url}login`, null, {
                 headers: {
                     Authorization: `Basic ${btoa(`${obj.email}:${obj.password}`)}`
                 }
             });
-
+            setLoading(true)
             dispatch(signin(data.data));
             if (data.status === 200) {
                 if (isChecked) {
@@ -107,6 +109,7 @@ const LoginForm = () => {
                     const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
                     localStorage.setItem('Remember_Me', encryptedData);
                 }
+                setLoading(false)
                 navigate('/')
 
             }
@@ -158,7 +161,7 @@ const LoginForm = () => {
                         <Checkbox isChecked={data ? !isChecked : isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
                     </Box>
                     <Box>
-                        <Link color={'#3F72AF'} to='/forgetPassword'>Forgot your password?</Link>
+                        <Link color={'#3F72AF'} to='forgetPassword'>Forgot your password?</Link>
                     </Box>
                 </Stack>
                 <br />
@@ -170,9 +173,14 @@ const LoginForm = () => {
                         </Alert>
                     )}
                 </Stack>
-                <Button width='full' mt={4} type='submit'>
-                    Sign In
-                </Button>
+                {
+                    loading ?
+                        <Spinner />
+                        :
+                        <Button width='full' mt={4} type='submit'>
+                            Sign In
+                        </Button>
+                }
             </form>
         </Box>
     );
