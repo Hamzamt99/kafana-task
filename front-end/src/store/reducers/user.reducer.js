@@ -36,6 +36,8 @@ export default (state = USER_STATE, action) => {
       return { ...state, updatedUser: payload }
     case "ALL_CLAIMED":
       return { ...state, allClaimed: payload }
+    case 'ONE_USERS':
+      return { ...state, oneUser: payload }
     default:
       return state
   }
@@ -49,7 +51,7 @@ export const getUser = () => async dispatch => {
       console.log('invalid token');
       return;
     }
-    const response = await axios.get(`${url}/users`, {
+    const response = await axios.get(`${url}users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -60,10 +62,28 @@ export const getUser = () => async dispatch => {
   }
 }
 
+export const getOneUser = (id) => async dispatch => {
+  try {
+    const token = cookies.load('user_session');
+    if (!token) {
+      console.log('invalid token');
+      return;
+    }
+    const response = await axios.get(`${url}users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(getoneUsers(response.data));
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+  }
+}
+
 export const updateUser = (obj, id) => async dispatch => {
   try {
     const token = cookies.load('user_session');
-    const response = await axios.patch(`${url}/user/${id}`, obj, {
+    const response = await axios.patch(`${url}user/${id}`, obj, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -93,7 +113,7 @@ export const deleteUser = (array) => async dispatch => {
       userID: array
     };
 
-    await axios.delete(`${url}/user`, {
+    await axios.delete(`${url}user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -130,7 +150,7 @@ export const deleteDeal = (array) => async dispatch => {
 export const allClaimed = () => async dispatch => {
   try {
     const token = cookies.load('user_session');
-    const response = await axios.get(`${url}/allclaimed`, {
+    const response = await axios.get(`${url}allclaimed`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -174,6 +194,11 @@ export const DecodeToken = () => ({
 export const getUsers = (users) => ({
   type: "ALL_USERS",
   payload: users,
+})
+
+export const getoneUsers = (user) => ({
+  type: "ONE_USERS",
+  payload: user,
 })
 
 export const getClaim = (users) => ({

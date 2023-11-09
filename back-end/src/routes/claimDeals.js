@@ -63,6 +63,24 @@ claimedRoute.get('/claim', isAuth, async (req, res) => {
     }
 });
 
+claimedRoute.get('/claim/:id', isAuth, async (req, res) => {
+    try {
+        const id = req.params.id;
+        if (id) {
+            const findDeal = await claimed.getRelation(id, dealsModel);
+            if (findDeal) {
+                res.status(200).json(findDeal);
+            } else {
+                res.status(200).json('no deals found');
+            }
+        } else {
+            res.status(400).json('Invalid request');
+        }
+    } catch (e) {
+        res.status(500).json(e.message);
+    }
+});
+
 
 // remove claim 
 claimedRoute.delete('/claim/:id', async (req, res) => {

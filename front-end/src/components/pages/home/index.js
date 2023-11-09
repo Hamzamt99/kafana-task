@@ -13,7 +13,7 @@ function Home() {
     const state = useSelector(state => state.deals)
     const claimedDeals = useSelector(state => state.deals.claimed)
     const [refresh, setRefresh] = useState(false)
-
+    console.log(state);
     const handleClick = (deal) => {
         dispatch(claimDeal(deal))
     }
@@ -33,7 +33,7 @@ function Home() {
                 {state.allDeals.map((deal) => (
                     <Col key={deal.id}>
                         <Card className='grid-item'>
-                            <Card.Img variant="top" src={deal.image || deals} />
+                            <Card.Img variant="top" src={deal.image || deals} className='image-deal'/>
                             <Card.Body>
                                 <Card.Title> {deal.name}</Card.Title>
                                 <Card.Text>  <span style={{ fontWeight: 'bold' }}>Description: </span> {deal.Description}</Card.Text>

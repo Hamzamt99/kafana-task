@@ -25,7 +25,7 @@ adminRoute.get('/users', isAuth, isAdmin, async (req, res) => {
 
 
 // get one users 
-adminRoute.get('/users/:id', async (req, res) => {
+adminRoute.get('/users/:id', isAuth, async (req, res) => {
     try {
         const id = req.params.id
         const findUsers = await user.read(id);

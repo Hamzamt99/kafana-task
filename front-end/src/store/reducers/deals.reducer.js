@@ -33,7 +33,7 @@ export const getDeals = () => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.get(`${url}/deals`, {
+        const response = await axios.get(`${url}deals`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -56,7 +56,7 @@ export const claimDeal = (deal) => async dispatch => {
             Amount: deal.Amount,
             Currency: deal.Currency
         }
-        const response = await axios.post(`${url}/claim`, obj, {
+        const response = await axios.post(`${url}claim`, obj, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -74,7 +74,7 @@ export const getClaim = () => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.get(`${url}/claim`, {
+        const response = await axios.get(`${url}claim`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -85,9 +85,29 @@ export const getClaim = () => async dispatch => {
     }
 };
 
+export const getUserClaim = (id) => async dispatch => {
+    try {
+        const token = cookies.load('user_session');
+        if (!token) {
+            console.log('invalid token');
+            return;
+        }
+        const response = await axios.get(`${url}claim/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        dispatch(getClaimed(response.data));
+    } catch (error) {
+        console.error('Error fetching following:', error);
+    }
+};
+
+
+
 export const removeClaim = (id) => async dispatch => {
     try {
-        const response = await axios.delete(`${url}/claim/${id}`);
+        const response = await axios.delete(`${url}claim/${id}`);
         dispatch(removeClaimed(response.data));
     } catch (error) {
         console.error('Error fetching following:', error);
@@ -101,7 +121,7 @@ export const updateDeal = (id, obj) => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.patch(`${url}/deal/${id}`, obj, {
+        const response = await axios.patch(`${url}deal/${id}`, obj, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -119,7 +139,7 @@ export const removeDeal = (id) => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.delete(`${url}/deal/${id}`, {
+        const response = await axios.delete(`${url}deal/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -141,7 +161,7 @@ export const addDeal = (data) => async dispatch => {
         formData.append('Description', data.Description)
         formData.append('Amount', data.Amount)
         formData.append('Currency', data.Currency)
-        await axios.post(`${url}/deal`, formData, {
+        await axios.post(`${url}deal`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
