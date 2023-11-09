@@ -11,8 +11,7 @@ function Container() {
     return (
         <div>
             <Routes>
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/" element={<NonAuthHome />} />
+                <Route path="/" element={<SignUp />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path='/forgetPassword' element={<ForgotPassword />} />
                 <Route path='/resetPassword/:id' element={<ResetPassword />} />

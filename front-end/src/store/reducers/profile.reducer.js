@@ -31,7 +31,7 @@ export const profileEdit = (payload) => async dispatch => {
                 phone: payload.phone,
             }
             const token = cookies.load('user_session');
-            const response = await axios.patch(`${url}/profile`, obj, {
+            const response = await axios.patch(`${url}profile`, obj, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -39,7 +39,7 @@ export const profileEdit = (payload) => async dispatch => {
             dispatch(profile(response.status));
         } else {
             const token = cookies.load('user_session');
-            const response = await axios.patch(`${url}/profile`, payload, {
+            const response = await axios.patch(`${url}profile`, payload, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -65,7 +65,7 @@ export const getProfile = () => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.get(`${url}/profile`, {
+        const response = await axios.get(`${url}profile`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -81,7 +81,7 @@ export const uploadImage = (image) => async dispatch => {
     const token = cookies.load('user_session');
     const formData = new FormData();
     formData.append('image', image)
-    await axios.post(`${url}/profileImage`, formData, {
+    await axios.post(`${url}profileImage`, formData, {
         headers: {
             Authorization: `Bearer ${token}`,
         }
@@ -96,7 +96,7 @@ export const uploadHero = (image) => async dispatch => {
     const token = cookies.load('user_session');
     const formData = new FormData();
     formData.append('image', image)
-    await axios.post(`${url}/heroImage`, formData, {
+    await axios.post(`${url}heroImage`, formData, {
         headers: {
             Authorization: `Bearer ${token}`,
         }
